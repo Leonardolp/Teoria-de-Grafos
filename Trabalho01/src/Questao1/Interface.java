@@ -139,7 +139,7 @@ public class Interface extends javax.swing.JFrame {
             taResultado.setText("Arquivo inválido");
             return;
         }
-
+        //Teste Commit
         try {
             BufferedReader arq = new BufferedReader(new FileReader(tfLocalArquivo.getText()));
             int i = 0;
