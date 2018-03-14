@@ -11,6 +11,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
@@ -148,14 +150,28 @@ public class Interface extends javax.swing.JFrame {
             int c;
             BufferedReader arq = new BufferedReader(new FileReader(tfLocalArquivo.getText()));
             Set<Character> set = new HashSet<Character>();
-
+            ArrayList<Letra> lista = new ArrayList<>();
+            
             while (arq.ready() && (c = arq.read()) != -1) {
                 set.add((char)c);
             }
             for (Iterator<Character> iterator = set.iterator(); iterator.hasNext();) {
                 Character next = iterator.next();
-                System.out.println(next);
-                
+                BufferedReader arq2 = new BufferedReader(new FileReader(tfLocalArquivo.getText()));
+                int i = 0;
+                while (arq2.ready() && (c = arq2.read()) != -1) {
+                    if(next.equals((char)c)){
+                        i++;
+                    }
+                }
+                Letra let = new Letra(i,next);
+                lista.add(let);
+            }
+            
+            Collections.sort(lista);
+            
+            for (Letra letra : lista) {
+                System.out.println(letra.getLet() +"-"+ letra.getNumero());
             }
             
         } catch (FileNotFoundException ex) {
