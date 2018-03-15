@@ -9,13 +9,13 @@ package Questao2;
  *
  * @author alexandre
  */
-public class ArvoreBinaria<T> {
-    private NoArvoreBinaria<T> raiz;
+public class ArvoreBinaria {
+    private NoArvoreBinaria raiz;
     public ArvoreBinaria(){
         raiz = null;
     }
     
-    public void setRaiz(NoArvoreBinaria<T> raiz){
+    public void setRaiz(NoArvoreBinaria raiz){
         this.raiz = raiz;
     } 
     
@@ -26,18 +26,18 @@ public class ArvoreBinaria<T> {
         return false;
     }
     
-    public boolean pertence(T info){
+    public boolean pertence(int info){
         return pertence(info, raiz);
     }
     
-    private boolean pertence(T info, NoArvoreBinaria<T> no){
+    private boolean pertence(int info, NoArvoreBinaria no){
         if(no == null)
             return false;
         
         return no.getInfo() == info;
     }
     
-    private String arvorePre(NoArvoreBinaria<T> no){
+    private String arvorePre(NoArvoreBinaria no){
         
         return "";
     }

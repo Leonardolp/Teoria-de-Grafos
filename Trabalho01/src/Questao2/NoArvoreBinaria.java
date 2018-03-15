@@ -9,31 +9,34 @@ package Questao2;
  *
  * @author alexandre
  */
-public class NoArvoreBinaria<T> {
-    private T info;
-    private NoArvoreBinaria<T> esq;
-    private NoArvoreBinaria<T> dir;
-    public NoArvoreBinaria(T info){
+public class NoArvoreBinaria {
+    private int info;
+    private char letra;
+    private NoArvoreBinaria esq;
+    private NoArvoreBinaria dir;
+    
+    
+    public NoArvoreBinaria(int info, char letra){
         this.info = info;
         this.esq = null;
-        this.info = null;
+        this.dir = null;
     }
     
-    public NoArvoreBinaria(T info, NoArvoreBinaria<T> esq, NoArvoreBinaria<T> dir){
+    public NoArvoreBinaria(int info, char letra, NoArvoreBinaria esq, NoArvoreBinaria dir){
         this.dir = dir;
         this.esq = esq;
         this.info = info;
     }
     
-    public T getInfo(){
+    public int getInfo(){
         return this.info;
     }
     
-    public NoArvoreBinaria<T> getEsquerda(){
+    public NoArvoreBinaria getEsquerda(){
         return this.esq;
     }
     
-    public NoArvoreBinaria<T> getDireita(){
+    public NoArvoreBinaria getDireita(){
         return this.dir;
     }
     
