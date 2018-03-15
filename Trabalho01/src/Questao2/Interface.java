@@ -16,6 +16,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
+import java.util.TreeSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
@@ -170,9 +171,12 @@ public class Interface extends javax.swing.JFrame {
             
             Collections.sort(lista);
             
-            for (Letra letra : lista) {
-                System.out.println(letra.getLet() +"-"+ letra.getNumero());
+            for (Iterator<Letra> iterator = lista.iterator(); iterator.hasNext();) {
+                Letra next = iterator.next();
+                System.out.println(next.getLet()+"--"+next.getNumero());
+                
             }
+            
             
         } catch (FileNotFoundException ex) {
             Logger.getLogger(Interface.class.getName()).log(Level.SEVERE, null, ex);
