@@ -151,38 +151,47 @@ public class Interface extends javax.swing.JFrame {
             int c;
             BufferedReader arq = new BufferedReader(new FileReader(tfLocalArquivo.getText()));
             Set<Character> set = new HashSet<Character>();
-            ArrayList<Letra> lista = new ArrayList<>();
-            
+            ArrayList<NoArvoreBinaria> lista = new ArrayList<>();
+
             while (arq.ready() && (c = arq.read()) != -1) {
-                set.add((char)c);
+                set.add((char) c);
             }
             for (Iterator<Character> iterator = set.iterator(); iterator.hasNext();) {
                 Character next = iterator.next();
                 BufferedReader arq2 = new BufferedReader(new FileReader(tfLocalArquivo.getText()));
                 int i = 0;
                 while (arq2.ready() && (c = arq2.read()) != -1) {
-                    if(next.equals((char)c)){
+                    if (next.equals((char) c)) {
                         i++;
                     }
                 }
-                Letra let = new Letra(i,next);
-                lista.add(let);
+                //Letra let = new Letra(i,next);
+                NoArvoreBinaria letra = new NoArvoreBinaria(i, next);
+                lista.add(letra);
             }
-            
+
             Collections.sort(lista);
-            
-            for (Iterator<Letra> iterator = lista.iterator(); iterator.hasNext();) {
-                Letra next = iterator.next();
-                System.out.println(next.getLet()+"--"+next.getNumero());
+
+            /*for (Iterator<NoArvoreBinaria> iterator = lista.iterator(); iterator.hasNext();) {
+                NoArvoreBinaria next = iterator.next();
+                System.out.println(next.getLetra()+"--"+next.getInfo());
                 
+            }*/
+            
+            while (lista.size() > 1) {
+                int valor = (int) lista.get(0).getInfo() + lista.get(1).getInfo();
+                NoArvoreBinaria novo = new NoArvoreBinaria(valor, lista.remove(0),lista.remove(1));
+                lista.add(novo);
+                Collections.sort(lista);
             }
             
-            
+            System.out.println("OK");
+
         } catch (FileNotFoundException ex) {
             Logger.getLogger(Interface.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex){
+        } catch (IOException ex) {
             Logger.getLogger(Interface.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (NullPointerException ex){
+        } catch (NullPointerException ex) {
             Logger.getLogger(Interface.class.getName()).log(Level.SEVERE, null, ex);
         }
 
