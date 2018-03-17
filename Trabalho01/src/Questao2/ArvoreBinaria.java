@@ -30,19 +30,43 @@ public class ArvoreBinaria {
         return pertence(info, raiz);
     }
     
-    private boolean pertence(int info, NoArvoreBinaria no){
-        if(no == null)
+     private boolean pertence(int info, NoArvoreBinaria no) {
+        if (no == null) {
             return false;
-        
-        return no.getInfo() == info;
+        }
+        return (no.getInfo() == info || pertence(info, no.getDireita())
+                || pertence(info, no.getEsquerda()));
     }
-    
-    private String arvorePre(NoArvoreBinaria no){
-        
-        return "";
+
+    public String toString() {
+        return arvorePre(this.raiz);
     }
-    
-    public String toString(){
-        return "";
+
+    private String arvorePre(NoArvoreBinaria no) {
+        if (no == null) {
+            return "<>";
+        } else {
+            return "<" + no.getInfo() + arvorePre(no.getDireita()) + arvorePre(no.getEsquerda());
+        }
+    }
+
+    public int quantNos(NoArvoreBinaria raiz) {
+        if (raiz != null) {
+            return 1 + quantNos(raiz.getEsquerda()) + quantNos(raiz.getDireita());
+        }
+        return 0;
+    }
+
+    public int quantNosDir(NoArvoreBinaria raiz) {
+        if (raiz != null) {
+            return 1 + quantNosDir(raiz.getDireita());
+        }
+        return 0;
+    }
+    public int quantNosEsq(NoArvoreBinaria raiz) {
+        if (raiz != null) {
+            return 1 + quantNosEsq(raiz.getEsquerda());
+        }
+        return 0;
     }
 }
