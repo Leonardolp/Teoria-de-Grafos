@@ -180,10 +180,20 @@ public class Interface extends javax.swing.JFrame {
             
             while (lista.size() > 1) {
                 int valor = (int) lista.get(0).getInfo() + lista.get(1).getInfo();
-                NoArvoreBinaria novo = new NoArvoreBinaria(valor, lista.remove(0),lista.remove(1));
-                lista.add(novo);
+                if(lista.size() == 2){
+                    NoArvoreBinaria novo = new NoArvoreBinaria(valor, lista.remove(0),lista.remove(0));
+                    lista.add(novo);
+
+                }else{
+                    NoArvoreBinaria novo = new NoArvoreBinaria(valor, lista.remove(0),lista.remove(1));
+                    lista.add(novo);
+
+                }
                 Collections.sort(lista);
             }
+            
+            ArvoreBinaria arvoreBi = new ArvoreBinaria();
+            arvoreBi.setRaiz(lista.get(0));
             
             System.out.println("OK");
 
