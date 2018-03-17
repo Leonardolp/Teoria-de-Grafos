@@ -194,8 +194,6 @@ public class Interface extends javax.swing.JFrame {
             
             ArvoreBinaria arvoreBi = new ArvoreBinaria();
             arvoreBi.setRaiz(lista.get(0));
-            
-            System.out.println("OK");
 
         } catch (FileNotFoundException ex) {
             Logger.getLogger(Interface.class.getName()).log(Level.SEVERE, null, ex);
