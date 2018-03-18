@@ -12,6 +12,7 @@ package Questao2;
 public class NoArvoreBinaria implements Comparable<NoArvoreBinaria> {
     private int info;
     private char letra;
+    private byte codigo;
     private NoArvoreBinaria esq;
     private NoArvoreBinaria dir;
     
@@ -84,6 +85,20 @@ public class NoArvoreBinaria implements Comparable<NoArvoreBinaria> {
      */
     public void setDir(NoArvoreBinaria dir) {
         this.dir = dir;
+    }
+
+    /**
+     * @return the codigo
+     */
+    public byte getCodigo() {
+        return codigo;
+    }
+
+    /**
+     * @param codigo the codigo to set
+     */
+    public void setCodigo(byte codigo) {
+        this.codigo = codigo;
     }
     
     

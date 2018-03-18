@@ -260,23 +260,35 @@ public class Interface extends javax.swing.JFrame {
                 return;
             }
             arquivoInicial = new BufferedReader(new FileReader(tfLocalArquivo.getText()));
-            FileOutputStream binario = new FileOutputStream(tfLocalArquivoDest.getText() + "\\Comprimido.bin");
-            DataOutputStream bufferTexto = new DataOutputStream(binario);
-            String codigo = "";
-            //byte codigo = (byte) 0xAA;
-            //arquivoInicial.lines();
-            
+            FileOutputStream arquivo = new FileOutputStream(tfLocalArquivoDest.getText() + "\\Comprimido.dat");
+            FileOutputStream binario = new FileOutputStream(tfLocalArquivoDest.getText() + "\\Binario.txt");
+            DataOutputStream bufferTexto = new DataOutputStream(arquivo);
+
             String linha = arquivoInicial.readLine();
-            int cont = 0;
             while (linha != null) {
-                //for (int i = 0; i < linha.length() -1; i++) {
-                  codigo = arvoreBi.getCaracter(linha.charAt(cont));
-                  linha = arquivoInicial.readLine();
-                  int cod = Integer.parseInt(codigo);
-                  bufferTexto.write((byte)cod);
-                  cont++;
-           //     }
+                String codigo = "";
+                for (int i = 0; i < linha.length() - 1; i++) {
+                    codigo = codigo + arvoreBi.getCaracter(linha.charAt(i));
+                    
+                }
+                //Escrever arquivo binario
+                binario.write(codigo.getBytes());
+                byte cod;
                 
+                
+                //gravar convertido
+                for (int i = 0; i < codigo.length() - 1; i++) {
+                    if (codigo.length() > i+8){
+                       cod = (byte) Integer.parseInt(codigo.substring(i, i + 8)); 
+                    }else{
+                      cod = (byte) Integer.parseInt(codigo.substring(i, codigo.length()-1));  
+                    }
+                                        
+                    bufferTexto.write(cod);
+                    i = i + 8;
+                }
+
+                linha = arquivoInicial.readLine();
             }
 
             bufferTexto.close();
@@ -284,7 +296,6 @@ public class Interface extends javax.swing.JFrame {
         } catch (IOException ex) {
             Logger.getLogger(Interface.class.getName()).log(Level.SEVERE, null, ex);
         }
-
     }//GEN-LAST:event_btComprimirActionPerformed
 
     private void tfLocalArquivoDestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfLocalArquivoDestActionPerformed
@@ -305,16 +316,24 @@ public class Interface extends javax.swing.JFrame {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
+
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Interface.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Interface.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Interface.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Interface.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Interface.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Interface.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Interface.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Interface.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
         //</editor-fold>
