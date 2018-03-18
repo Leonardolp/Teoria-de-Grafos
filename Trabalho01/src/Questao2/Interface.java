@@ -292,6 +292,7 @@ public class Interface extends javax.swing.JFrame {
             }
 
             bufferTexto.close();
+            taResultado.setText(taResultado.getText()+ "Tamanho Arquivo Comprimido: " + Files.readAttributes(Paths.get(tfLocalArquivoDest.getText() + "\\Comprimido.dat"), BasicFileAttributes.class).size() + " bytes \n");
 
         } catch (IOException ex) {
             Logger.getLogger(Interface.class.getName()).log(Level.SEVERE, null, ex);
