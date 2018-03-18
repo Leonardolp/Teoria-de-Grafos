@@ -8,8 +8,10 @@ package Questao2;
 import Questao1.*;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -257,16 +259,24 @@ public class Interface extends javax.swing.JFrame {
             if (arvoreBi == null) {
                 return;
             }
-            FileWriter arqTexto = new FileWriter(tfLocalArquivoDest.getText() + "\\ArquivoComprimido.txt");
-            BufferedWriter bufferTexto = new BufferedWriter(arqTexto);
+            arquivoInicial = new BufferedReader(new FileReader(tfLocalArquivo.getText()));
+            FileOutputStream binario = new FileOutputStream(tfLocalArquivoDest.getText() + "\\Comprimido.bin");
+            DataOutputStream bufferTexto = new DataOutputStream(binario);
             String codigo = "";
-            arquivoInicial.lines();
-            while (!arquivoInicial.ready()) {
-                String linha = arquivoInicial.readLine();
-                for (int i = 0; i < linha.length() -1; i++) {
-                  codigo = arvoreBi.getCaracter(linha.charAt(i));  
-                }
-                bufferTexto.write(codigo);
+            //byte codigo = (byte) 0xAA;
+            //arquivoInicial.lines();
+            
+            String linha = arquivoInicial.readLine();
+            int cont = 0;
+            while (linha != null) {
+                //for (int i = 0; i < linha.length() -1; i++) {
+                  codigo = arvoreBi.getCaracter(linha.charAt(cont));
+                  linha = arquivoInicial.readLine();
+                  int cod = Integer.parseInt(codigo);
+                  bufferTexto.write((byte)cod);
+                  cont++;
+           //     }
+                
             }
 
             bufferTexto.close();

@@ -51,7 +51,7 @@ public class ArvoreBinaria {
             //esquerda para direita
             cod = cod + codigoLetras(no.getEsq(), i + " " + "0");
             cod = cod + codigoLetras(no.getDir(), i + " " + "1");
-            
+
             return cod;
         } else {
             return "Letra = " + no.getLetra() + " Codigo = " + i + " Frequência = " + no.getInfo() + "\n ";
@@ -59,21 +59,28 @@ public class ArvoreBinaria {
 
     }
 
-    private String getCaracter(NoArvoreBinaria no, char i,String cod) {
+    private String getCaracter(NoArvoreBinaria no, char i, String cod) {
         String retorno = "";
-        
-        if (no.getLetra() != i){
+
+        if (no.getLetra() != i) {
             //Esquerad para direita
-            retorno = getCaracter(no.getEsq(),i,cod+""+"0");
-            retorno = getCaracter(no.getDir(), i,cod+""+"1");
-          return retorno;
-        }else{
-          return cod;   
+            if (no.getEsq() != null) {
+                retorno = getCaracter(no.getEsq(), i, cod + "" + "0");
+                if (retorno.equals(""))
+                retorno = getCaracter(no.getDir(), i, cod + "" + "1");
+                if (retorno.equals(""))
+                    return "";
+                
+                return retorno;
+            }else
+             return retorno;
+        } else {
+            return cod;
         }
     }
 
     public String getCaracter(char caracter) {
-        return getCaracter(raiz, caracter,"");
+        return getCaracter(raiz, caracter, "");
     }
 
     public String codigoLetras() {
