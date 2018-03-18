@@ -18,7 +18,7 @@ public class Huffman {
     private Huffman() { }
 
     // Huffman trie node
-    private static class Node implements Comparable<Node> {
+ /*   private static class Node implements Comparable<Node> {
         private final char ch;
         private final int freq;
         private final Node left, right;
@@ -47,9 +47,9 @@ public class Huffman {
      * using Huffman codes with an 8-bit alphabet; and writes the results
      * to standard output.
      */
-    public static void compress() {
+/*    public static void compress() {
         // read the input
-        String s = BinaryStdIn.readString();
+        String s = " ";//= BinaryStdIn.readString();
         char[] input = s.toCharArray();
 
         // tabulate frequency counts
@@ -68,28 +68,28 @@ public class Huffman {
         writeTrie(root);
 
         // print number of bytes in original uncompressed message
-        BinaryStdOut.write(input.length);
+       // BinaryStdOut.write(input.length);
 
         // use Huffman code to encode input
         for (int i = 0; i < input.length; i++) {
             String code = st[input[i]];
             for (int j = 0; j < code.length(); j++) {
                 if (code.charAt(j) == '0') {
-                    BinaryStdOut.write(false);
+ //                   BinaryStdOut.write(false);
                 }
                 else if (code.charAt(j) == '1') {
-                    BinaryStdOut.write(true);
+ //                   BinaryStdOut.write(true);
                 }
                 else throw new IllegalStateException("Illegal state");
             }
         }
 
         // close output stream
-        BinaryStdOut.close();
+ //       BinaryStdOut.close();
     }
 
     // build the Huffman trie given frequencies
-    private static Node buildTrie(int[] freq) {
+   /*   private static Node buildTrie(int[] freq) {
 
         // initialze priority queue with singleton trees
         MinPQ<Node> pq = new MinPQ<Node>();
@@ -141,7 +141,7 @@ public class Huffman {
      * Reads a sequence of bits that represents a Huffman-compressed message from
      * standard input; expands them; and writes the results to standard output.
      */
-    public static void expand() {
+   /* public static void expand() {
 
         // read in Huffman trie from input stream
         Node root = readTrie(); 
@@ -179,7 +179,7 @@ public class Huffman {
      *
      * @param args the command-line arguments
      */
-    public static void main(String[] args) {
+  /*  public static void main(String[] args) {
         if      (args[0].equals("-")) compress();
         else if (args[0].equals("+")) expand();
         else throw new IllegalArgumentException("Illegal command line argument");

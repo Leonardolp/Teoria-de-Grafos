@@ -7,10 +7,16 @@ package Questao2;
 
 import Questao1.*;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.attribute.BasicFileAttributes;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -28,6 +34,8 @@ import javax.swing.JFileChooser;
 public class Interface extends javax.swing.JFrame {
 
     private ListaPalavras listaPalavras;
+    ArvoreBinaria arvoreBi;
+    BufferedReader arquivoInicial;
 
     /**
      * Creates new form Interface
@@ -54,6 +62,10 @@ public class Interface extends javax.swing.JFrame {
         btProcurarArquivo = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         taResultado = new javax.swing.JTextArea();
+        jLabel3 = new javax.swing.JLabel();
+        btComprimir = new javax.swing.JButton();
+        tfLocalArquivoDest = new javax.swing.JTextField();
+        btProcurarArquivo1 = new javax.swing.JButton();
 
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
@@ -61,11 +73,14 @@ public class Interface extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
         tfLocalArquivo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tfLocalArquivoActionPerformed(evt);
             }
         });
+        jPanel1.add(tfLocalArquivo, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, 221, -1));
 
         btAnalisar.setText("Analisar Arquivo");
         btAnalisar.addActionListener(new java.awt.event.ActionListener() {
@@ -73,8 +88,10 @@ public class Interface extends javax.swing.JFrame {
                 btAnalisarActionPerformed(evt);
             }
         });
+        jPanel1.add(btAnalisar, new org.netbeans.lib.awtextra.AbsoluteConstraints(288, 31, 120, -1));
 
         jLabel1.setText("Selecione o Arquivo");
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 11, -1, -1));
 
         btProcurarArquivo.setText("...");
         btProcurarArquivo.addActionListener(new java.awt.event.ActionListener() {
@@ -82,45 +99,39 @@ public class Interface extends javax.swing.JFrame {
                 btProcurarArquivoActionPerformed(evt);
             }
         });
+        jPanel1.add(btProcurarArquivo, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 30, 33, -1));
 
         taResultado.setColumns(20);
         taResultado.setRows(5);
         jScrollPane1.setViewportView(taResultado);
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(tfLocalArquivo, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btProcurarArquivo, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(btAnalisar))
-                            .addComponent(jLabel1))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(tfLocalArquivo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btAnalisar)
-                    .addComponent(btProcurarArquivo))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 390, Short.MAX_VALUE)
-                .addContainerGap())
-        );
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 120, 410, 330));
+
+        jLabel3.setText("Resultado:");
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 100, 70, -1));
+
+        btComprimir.setText("Comprimir Arquivo");
+        btComprimir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btComprimirActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btComprimir, new org.netbeans.lib.awtextra.AbsoluteConstraints(289, 60, 120, -1));
+
+        tfLocalArquivoDest.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tfLocalArquivoDestActionPerformed(evt);
+            }
+        });
+        jPanel1.add(tfLocalArquivoDest, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, 221, -1));
+
+        btProcurarArquivo1.setText("...");
+        btProcurarArquivo1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btProcurarArquivo1ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btProcurarArquivo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 60, 33, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -149,13 +160,14 @@ public class Interface extends javax.swing.JFrame {
         //Teste Commit
         try {
             int c;
-            BufferedReader arq = new BufferedReader(new FileReader(tfLocalArquivo.getText()));
+            arquivoInicial = new BufferedReader(new FileReader(tfLocalArquivo.getText()));
             Set<Character> set = new HashSet<Character>();
             ArrayList<NoArvoreBinaria> lista = new ArrayList<>();
-
-            while (arq.ready() && (c = arq.read()) != -1) {
+            taResultado.setText("Tamanho Arquivo Original: " + Files.readAttributes(Paths.get(tfLocalArquivo.getText()), BasicFileAttributes.class).size() + " bytes \n");
+            while (arquivoInicial.ready() && (c = arquivoInicial.read()) != -1) {
                 set.add((char) c);
             }
+
             for (Iterator<Character> iterator = set.iterator(); iterator.hasNext();) {
                 Character next = iterator.next();
                 BufferedReader arq2 = new BufferedReader(new FileReader(tfLocalArquivo.getText()));
@@ -168,6 +180,7 @@ public class Interface extends javax.swing.JFrame {
                 //Letra let = new Letra(i,next);
                 NoArvoreBinaria letra = new NoArvoreBinaria(i, next);
                 lista.add(letra);
+                //               taResultado.setText(taResultado.getText()+"Letra -> ("+letra.getLetra()+") Quantidade -> "+letra.getInfo()+"\n" );
             }
 
             Collections.sort(lista);
@@ -177,24 +190,25 @@ public class Interface extends javax.swing.JFrame {
                 System.out.println(next.getLetra()+"--"+next.getInfo());
                 
             }*/
-            
             while (lista.size() > 1) {
                 int valor = (int) lista.get(0).getInfo() + lista.get(1).getInfo();
-                if(lista.size() == 2){
-                    NoArvoreBinaria novo = new NoArvoreBinaria(valor, lista.remove(0),lista.remove(0));
+                if (lista.size() == 2) {
+                    NoArvoreBinaria novo = new NoArvoreBinaria(valor, lista.remove(0), lista.remove(0));
                     lista.add(novo);
 
-                }else{
-                    NoArvoreBinaria novo = new NoArvoreBinaria(valor, lista.remove(0),lista.remove(1));
+                } else {
+                    NoArvoreBinaria novo = new NoArvoreBinaria(valor, lista.remove(0), lista.remove(1));
                     lista.add(novo);
 
                 }
                 Collections.sort(lista);
             }
-            
-            ArvoreBinaria arvoreBi = new ArvoreBinaria();
+
+            //Declaração Foi lá pra cima
+            arvoreBi = new ArvoreBinaria();
             arvoreBi.setRaiz(lista.get(0));
-            System.out.println(arvoreBi.toString());
+            taResultado.setText(taResultado.getText() + "Estrutura da arvore: \n" + arvoreBi.toString());
+            taResultado.setText(taResultado.getText() + "\n Lista De códigos \n" + arvoreBi.codigoLetras());
 
         } catch (FileNotFoundException ex) {
             Logger.getLogger(Interface.class.getName()).log(Level.SEVERE, null, ex);
@@ -204,7 +218,7 @@ public class Interface extends javax.swing.JFrame {
             Logger.getLogger(Interface.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        taResultado.setText("");
+//        taResultado.setText("");
 //        listaPalavras.First();
 //        while (!listaPalavras.EOF()) {
 //            taResultado.setText(taResultado.getText() + listaPalavras.GetValor() + "\n");
@@ -225,6 +239,47 @@ public class Interface extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_btProcurarArquivoActionPerformed
+
+    private void btProcurarArquivo1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btProcurarArquivo1ActionPerformed
+        JFileChooser file = new JFileChooser();
+        file.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        int i = file.showSaveDialog(null);
+        if (i == 1) {
+            tfLocalArquivoDest.setText("");
+        } else {
+            File arquivo = file.getSelectedFile();
+            tfLocalArquivoDest.setText(arquivo.getPath());
+        }
+    }//GEN-LAST:event_btProcurarArquivo1ActionPerformed
+
+    private void btComprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btComprimirActionPerformed
+        try {
+            if (arvoreBi == null) {
+                return;
+            }
+            FileWriter arqTexto = new FileWriter(tfLocalArquivoDest.getText() + "\\ArquivoComprimido.txt");
+            BufferedWriter bufferTexto = new BufferedWriter(arqTexto);
+            String codigo = "";
+            arquivoInicial.lines();
+            while (!arquivoInicial.ready()) {
+                String linha = arquivoInicial.readLine();
+                for (int i = 0; i < linha.length() -1; i++) {
+                  codigo = arvoreBi.getCaracter(linha.charAt(i));  
+                }
+                bufferTexto.write(codigo);
+            }
+
+            bufferTexto.close();
+
+        } catch (IOException ex) {
+            Logger.getLogger(Interface.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }//GEN-LAST:event_btComprimirActionPerformed
+
+    private void tfLocalArquivoDestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfLocalArquivoDestActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tfLocalArquivoDestActionPerformed
 
     /**
      * @param args the command line arguments
@@ -264,13 +319,17 @@ public class Interface extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btAnalisar;
+    private javax.swing.JButton btComprimir;
     private javax.swing.JButton btProcurarArquivo;
+    private javax.swing.JButton btProcurarArquivo1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextArea taResultado;
     private javax.swing.JTextField tfLocalArquivo;
+    private javax.swing.JTextField tfLocalArquivoDest;
     // End of variables declaration//GEN-END:variables
 }

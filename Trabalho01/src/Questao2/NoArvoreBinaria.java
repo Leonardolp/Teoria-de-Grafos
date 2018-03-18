@@ -32,14 +32,6 @@ public class NoArvoreBinaria implements Comparable<NoArvoreBinaria> {
     public int getInfo(){
         return this.info;
     }
-    
-    public NoArvoreBinaria getEsquerda(){
-        return this.getEsq();
-    }
-    
-    public NoArvoreBinaria getDireita(){
-        return this.getDir();
-    }
 
     @Override
     public int compareTo(NoArvoreBinaria outro) {
