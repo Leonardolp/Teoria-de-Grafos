@@ -11,6 +11,13 @@ package Questao2;
  */
 public class ArvoreBinaria {
 
+    /**
+     * @return the raiz
+     */
+    public NoArvoreBinaria getRaiz() {
+        return raiz;
+    }
+
     private NoArvoreBinaria raiz;
 
     public ArvoreBinaria() {
@@ -22,7 +29,7 @@ public class ArvoreBinaria {
     }
 
     public boolean estaVazia() {
-        if (this.raiz == null) {
+        if (this.getRaiz() == null) {
             return true;
         }
 
@@ -30,7 +37,7 @@ public class ArvoreBinaria {
     }
 
     public boolean pertence(int info) {
-        return pertence(info, raiz);
+        return pertence(info, getRaiz());
     }
 
     private boolean pertence(int info, NoArvoreBinaria no) {
@@ -42,7 +49,7 @@ public class ArvoreBinaria {
     }
 
     public String toString() {
-        return arvorePre(this.raiz);
+        return arvorePre(this.getRaiz());
     }
 
     private String codigoLetras(NoArvoreBinaria no, String i) {
@@ -80,11 +87,11 @@ public class ArvoreBinaria {
     }
 
     public String getCaracter(char caracter) {
-        return getCaracter(raiz, caracter, "");
+        return getCaracter(getRaiz(), caracter, "");
     }
 
     public String codigoLetras() {
-        return codigoLetras(this.raiz, "");
+        return codigoLetras(this.getRaiz(), "");
     }
 
     private String arvorePre(NoArvoreBinaria no) {
