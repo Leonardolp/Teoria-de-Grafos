@@ -145,7 +145,7 @@ public class Interface extends javax.swing.JFrame {
         taResultado.setText(taResultado.getText()+"\n"+"Tempo Descompressão: "+(System.currentTimeMillis()-tempoInicioDecodificacao)+" millisegundos");
         taResultado.setText(taResultado.getText()+"\n"+"Tempo total: "+(System.currentTimeMillis()-tempoInicioAnalise)+" millisegundos");
         try {
-            arquivoBinario.write(arvoreBi.toString().getBytes());
+            arquivoBinario.write(("\n Arvore Binaria = "+arvoreBi.toString()).getBytes());
             arquivoBinario.close();
         } catch (IOException ex) {
             Logger.getLogger(Interface.class.getName()).log(Level.SEVERE, null, ex);
