@@ -68,16 +68,6 @@ public class Interface extends javax.swing.JFrame {
         btProcurarArquivo = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         taResultado = new javax.swing.JTextArea();
-        jLabel3 = new javax.swing.JLabel();
-        btComprimir = new javax.swing.JButton();
-        tfLocalArquivoDest = new javax.swing.JTextField();
-        btProcurarArquivoDesc = new javax.swing.JButton();
-        btDescomprimir = new javax.swing.JButton();
-        btProcurarArquivo2 = new javax.swing.JButton();
-        tfLocalArquivoDescomprimi = new javax.swing.JTextField();
-        btProcurarArquivo3 = new javax.swing.JButton();
-        tfLocalArquivoDescomprimiSalvo = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
 
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
@@ -117,74 +107,7 @@ public class Interface extends javax.swing.JFrame {
         taResultado.setRows(5);
         jScrollPane1.setViewportView(taResultado);
 
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 190, 410, 260));
-
-        jLabel3.setText("Resultado:");
-        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 170, 70, -1));
-
-        btComprimir.setText("Comprimir Arquivo");
-        btComprimir.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btComprimirActionPerformed(evt);
-            }
-        });
-        jPanel1.add(btComprimir, new org.netbeans.lib.awtextra.AbsoluteConstraints(289, 60, 120, -1));
-
-        tfLocalArquivoDest.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tfLocalArquivoDestActionPerformed(evt);
-            }
-        });
-        jPanel1.add(tfLocalArquivoDest, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, 221, -1));
-
-        btProcurarArquivoDesc.setText("...");
-        btProcurarArquivoDesc.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btProcurarArquivoDescActionPerformed(evt);
-            }
-        });
-        jPanel1.add(btProcurarArquivoDesc, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 60, 33, -1));
-
-        btDescomprimir.setText("Descomprimir");
-        btDescomprimir.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btDescomprimirActionPerformed(evt);
-            }
-        });
-        jPanel1.add(btDescomprimir, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 90, 120, -1));
-
-        btProcurarArquivo2.setText("...");
-        btProcurarArquivo2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btProcurarArquivo2ActionPerformed(evt);
-            }
-        });
-        jPanel1.add(btProcurarArquivo2, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 90, 33, -1));
-
-        tfLocalArquivoDescomprimi.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tfLocalArquivoDescomprimiActionPerformed(evt);
-            }
-        });
-        jPanel1.add(tfLocalArquivoDescomprimi, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 90, 221, -1));
-
-        btProcurarArquivo3.setText("...");
-        btProcurarArquivo3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btProcurarArquivo3ActionPerformed(evt);
-            }
-        });
-        jPanel1.add(btProcurarArquivo3, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 130, 33, -1));
-
-        tfLocalArquivoDescomprimiSalvo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tfLocalArquivoDescomprimiSalvoActionPerformed(evt);
-            }
-        });
-        jPanel1.add(tfLocalArquivoDescomprimiSalvo, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 130, 221, -1));
-
-        jLabel2.setText("Salvar em:");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 110, -1, -1));
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, 400, 390));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -211,19 +134,38 @@ public class Interface extends javax.swing.JFrame {
             return;
         }
         //Teste Commit
+        long tempoInicioAnalise = System.currentTimeMillis();
+        Analisar(tfLocalArquivo.getText());
+        taResultado.setText(taResultado.getText()+"\n"+"Tempo Analise: "+(System.currentTimeMillis()-tempoInicioAnalise)+" millisegundos");
+        long tempoIniciocompresao = System.currentTimeMillis();
+        Comprimir(tfLocalArquivo.getText());
+        taResultado.setText(taResultado.getText()+"\n"+"Tempo Compressão: "+(System.currentTimeMillis()-tempoIniciocompresao)+" millisegundos");
+        long tempoInicioDecodificacao = System.currentTimeMillis();
+        Descomprimir(tfLocalArquivo.getText());
+        taResultado.setText(taResultado.getText()+"\n"+"Tempo Descompressão: "+(System.currentTimeMillis()-tempoInicioDecodificacao)+" millisegundos");
+        taResultado.setText(taResultado.getText()+"\n"+"Tempo total: "+(System.currentTimeMillis()-tempoInicioAnalise)+" millisegundos");
+        try {
+            arquivoBinario.write(arvoreBi.toString().getBytes());
+            arquivoBinario.close();
+        } catch (IOException ex) {
+            Logger.getLogger(Interface.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }//GEN-LAST:event_btAnalisarActionPerformed
+    private void Analisar(String local){
         try {
             int c;
-            arquivoInicial = new BufferedReader(new FileReader(tfLocalArquivo.getText()));
+            arquivoInicial = new BufferedReader(new FileReader(local));
             Set<Character> set = new HashSet<Character>();
             ArrayList<NoArvoreBinaria> lista = new ArrayList<>();
-            taResultado.setText("Tamanho Arquivo Original: " + Files.readAttributes(Paths.get(tfLocalArquivo.getText()), BasicFileAttributes.class).size() + " bytes \n");
+            taResultado.setText("Tamanho Arquivo Original: " + Files.readAttributes(Paths.get(local), BasicFileAttributes.class).size() + " bytes \n");
             while (arquivoInicial.ready() && (c = arquivoInicial.read()) != -1) {
                 set.add((char) c);
             }
 
             for (Iterator<Character> iterator = set.iterator(); iterator.hasNext();) {
                 Character next = iterator.next();
-                BufferedReader arq2 = new BufferedReader(new FileReader(tfLocalArquivo.getText()));
+                BufferedReader arq2 = new BufferedReader(new FileReader(local));
                 int i = 0;
                 while (arq2.ready() && (c = arq2.read()) != -1) {
                     if (next.equals((char) c)) {
@@ -245,15 +187,8 @@ public class Interface extends javax.swing.JFrame {
             }*/
             while (lista.size() > 1) {
                 int valor = (int) lista.get(0).getInfo() + lista.get(1).getInfo();
-                if (lista.size() == 2) {
-                    NoArvoreBinaria novo = new NoArvoreBinaria(valor, lista.remove(0), lista.remove(0));
-                    lista.add(novo);
-
-                } else {
-                    NoArvoreBinaria novo = new NoArvoreBinaria(valor, lista.remove(0), lista.remove(1));
-                    lista.add(novo);
-
-                }
+                NoArvoreBinaria novo = new NoArvoreBinaria(valor, lista.remove(0), lista.remove(0));
+                lista.add(novo);
                 Collections.sort(lista);
             }
 
@@ -270,15 +205,7 @@ public class Interface extends javax.swing.JFrame {
         } catch (NullPointerException ex) {
             Logger.getLogger(Interface.class.getName()).log(Level.SEVERE, null, ex);
         }
-
-//        taResultado.setText("");
-//        listaPalavras.First();
-//        while (!listaPalavras.EOF()) {
-//            taResultado.setText(taResultado.getText() + listaPalavras.GetValor() + "\n");
-//            listaPalavras.Next();
-//        }
-    }//GEN-LAST:event_btAnalisarActionPerformed
-
+    }
     private void btProcurarArquivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btProcurarArquivoActionPerformed
 
         JFileChooser file = new JFileChooser();
@@ -292,33 +219,20 @@ public class Interface extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_btProcurarArquivoActionPerformed
-
-    private void btProcurarArquivoDescActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btProcurarArquivoDescActionPerformed
-        JFileChooser file = new JFileChooser();
-        file.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-        int i = file.showSaveDialog(null);
-        if (i == 1) {
-            tfLocalArquivoDest.setText("");
-        } else {
-            File arquivo = file.getSelectedFile();
-            tfLocalArquivoDest.setText(arquivo.getPath());
-        }
-    }//GEN-LAST:event_btProcurarArquivoDescActionPerformed
-
-    private void btComprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btComprimirActionPerformed
+    private void Comprimir(String local){
         try {
             if (arvoreBi == null) {
                 return;
             }
-            arquivoInicial = new BufferedReader(new FileReader(tfLocalArquivo.getText()));
-            arquivoComprim = new FileOutputStream(tfLocalArquivoDest.getText() + "\\Comprimido.dat");
-            arquivoBinario = new FileOutputStream(tfLocalArquivoDest.getText() + "\\Binario.txt");
-            DataOutputStream bufferTexto = new DataOutputStream(arquivoComprim);
+            arquivoInicial = new BufferedReader(new FileReader(local));
+            //arquivoComprim = new FileOutputStream(tfLocalArquivo.getText() + "\\Comprimido.dat");
+            arquivoBinario = new FileOutputStream(local.substring(0,local.lastIndexOf("."))+".out");
+            //DataOutputStream bufferTexto = new DataOutputStream(arquivoComprim);
 
             String linha = arquivoInicial.readLine();
             while (linha != null) {
                 String codigo = "";
-                for (int i = 0; i < linha.length() - 1; i++) {
+                for (int i = 0; i < linha.length(); i++) {
                     codigo = codigo + arvoreBi.getCaracter(linha.charAt(i));
 
                 }
@@ -327,7 +241,7 @@ public class Interface extends javax.swing.JFrame {
                 byte cod;
 
                 //gravar convertido
-                for (int i = 0; i < codigo.length() - 1; i++) {
+                /* for (int i = 0; i < codigo.length() - 1; i++) {
                     if (codigo.length() > i + 8) {
                         cod = (byte) Integer.parseInt(codigo.substring(i, i + 8));
                     } else {
@@ -336,91 +250,51 @@ public class Interface extends javax.swing.JFrame {
 
                     bufferTexto.write(cod);
                     i = i + 8;
-                }
+                }*/
                 linha = arquivoInicial.readLine();
             }
-
-            bufferTexto.close();
-            taResultado.setText(taResultado.getText() + "Tamanho Arquivo Comprimido: " + Files.readAttributes(Paths.get(tfLocalArquivoDest.getText() + "\\Comprimido.dat"), BasicFileAttributes.class).size() + " bytes \n");
-
+            //arquivoBinario.close();
+            //bufferTexto.close();
+            //taResultado.setText(taResultado.getText() + "Tamanho Arquivo Comprimido: " + Files.readAttributes(Paths.get(tfLocalArquivoDest.getText() + "\\Comprimido.dat"), BasicFileAttributes.class).size() + " bytes \n");
+            taResultado.setText(taResultado.getText()+"\n"+"Arquivo Codificado...");
         } catch (IOException ex) {
             Logger.getLogger(Interface.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_btComprimirActionPerformed
-
-    private void tfLocalArquivoDestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfLocalArquivoDestActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tfLocalArquivoDestActionPerformed
-
-    private void btDescomprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btDescomprimirActionPerformed
+    }    private void Descomprimir(String local){
         try {
             if (arvoreBi == null) {
                 return;
             }
-
-            FileWriter arquivoDescompri = new FileWriter(tfLocalArquivoDescomprimiSalvo.getText() + "\\Descomprimido.dat");
+            File file = new File(local);
+            FileWriter arquivoDescompri = new FileWriter(local.substring(0,local.lastIndexOf("."))+"_Descomprimido.out");
             BufferedWriter arqDesc = new BufferedWriter(arquivoDescompri);
-            BufferedReader arqui = new BufferedReader(new FileReader(tfLocalArquivoDescomprimi.getText()));
-
+            BufferedReader arqui = new BufferedReader(new FileReader(local.substring(0,local.lastIndexOf("."))+".out"));
             String txt = arqui.readLine();
             NoArvoreBinaria no = arvoreBi.getRaiz();
             while (txt != null) {
-                for (int i = 0; i < txt.length() - 1; i++) {
+                for (int i = 0; i < txt.length(); i++) {
+
+                    if (txt.charAt(i) == '0') {
+                        no = no.getEsq();
+                    } else {
+                        no = no.getDir();
+                    }
                     if (no.getDir() == null) {
                         arqDesc.write(no.getLetra());
-                    } else {
-                     if (txt.charAt(i) == '0'){
-                        no = no.getDir(); 
-                     } else{
-                        no = no.getEsq(); 
-                     }  
+                        no = arvoreBi.getRaiz();
                     }
-
-                    
                 }
-               txt = arqui.readLine();
-               
+                txt = arqui.readLine();
 
                 //arquivoBinario.write(codigo.getBytes());
                 //Escrever arquivo Descomprimido
             }
-
+            arqDesc.close();
         } catch (IOException ex) {
             Logger.getLogger(Interface.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_btDescomprimirActionPerformed
-
-    private void btProcurarArquivo2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btProcurarArquivo2ActionPerformed
-        JFileChooser file = new JFileChooser();
-        file.setFileSelectionMode(JFileChooser.FILES_ONLY);
-        int i = file.showSaveDialog(null);
-        if (i == 1) {
-            tfLocalArquivoDescomprimi.setText("");
-        } else {
-            File arquivo = file.getSelectedFile();
-            tfLocalArquivoDescomprimi.setText(arquivo.getPath());
-        }
-    }//GEN-LAST:event_btProcurarArquivo2ActionPerformed
-
-    private void tfLocalArquivoDescomprimiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfLocalArquivoDescomprimiActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tfLocalArquivoDescomprimiActionPerformed
-
-    private void btProcurarArquivo3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btProcurarArquivo3ActionPerformed
-        JFileChooser file = new JFileChooser();
-        file.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-        int i = file.showSaveDialog(null);
-        if (i == 1) {
-            tfLocalArquivoDescomprimi.setText("");
-        } else {
-            File arquivo = file.getSelectedFile();
-            tfLocalArquivoDescomprimi.setText(arquivo.getPath());
-        }
-    }//GEN-LAST:event_btProcurarArquivo3ActionPerformed
-
-    private void tfLocalArquivoDescomprimiSalvoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfLocalArquivoDescomprimiSalvoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tfLocalArquivoDescomprimiSalvoActionPerformed
+        taResultado.setText(taResultado.getText()+"\n"+"Arquivo Decodificado com sucesso!");
+    }
 
     /**
      * @param args the command line arguments
@@ -468,23 +342,13 @@ public class Interface extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btAnalisar;
-    private javax.swing.JButton btComprimir;
-    private javax.swing.JButton btDescomprimir;
     private javax.swing.JButton btProcurarArquivo;
-    private javax.swing.JButton btProcurarArquivo2;
-    private javax.swing.JButton btProcurarArquivo3;
-    private javax.swing.JButton btProcurarArquivoDesc;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextArea taResultado;
     private javax.swing.JTextField tfLocalArquivo;
-    private javax.swing.JTextField tfLocalArquivoDescomprimi;
-    private javax.swing.JTextField tfLocalArquivoDescomprimiSalvo;
-    private javax.swing.JTextField tfLocalArquivoDest;
     // End of variables declaration//GEN-END:variables
 }
