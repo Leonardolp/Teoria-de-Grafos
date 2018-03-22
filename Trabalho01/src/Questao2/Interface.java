@@ -129,8 +129,7 @@ public class Interface extends javax.swing.JFrame {
 
     private void btAnalisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAnalisarActionPerformed
         if (tfLocalArquivo.getText().equals("")) {
-            taResultado.setText("");
-            taResultado.setText("Arquivo inválido");
+            taResultado.setText(taResultado.getText()+"Arquivo inválido");
             return;
         }
         //Teste Commit
@@ -158,7 +157,7 @@ public class Interface extends javax.swing.JFrame {
             arquivoInicial = new BufferedReader(new FileReader(local));
             Set<Character> set = new HashSet<Character>();
             ArrayList<NoArvoreBinaria> lista = new ArrayList<>();
-            taResultado.setText("Tamanho Arquivo Original: " + Files.readAttributes(Paths.get(local), BasicFileAttributes.class).size() + " bytes \n");
+            taResultado.setText(taResultado.getText()+"Tamanho Arquivo Original: \n" + Files.readAttributes(Paths.get(local), BasicFileAttributes.class).size() + " bytes \n");
             while (arquivoInicial.ready() && (c = arquivoInicial.read()) != -1) {
                 set.add((char) c);
             }
@@ -238,6 +237,8 @@ public class Interface extends javax.swing.JFrame {
                 }
                 //Escrever arquivoComprim arquivoBinario
                 arquivoBinario.write(codigo.getBytes());
+                taResultado.setText(taResultado.getText()+"\n Código Binario:"+codigo);
+                
                 byte cod;
 
                 //gravar convertido
